@@ -1,38 +1,67 @@
 # Documentation: https://docs.brew.sh/Formula-Cookbook
 #                https://docs.brew.sh/rubydoc/Formula
 # PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
-class MarcolipariRemoto < Formula
-  desc ""
-  homepage "https://github.com/MarcoLipari/temp"
-  url "https://github.com/MarcoLipari/temp/archive/refs/tags/v1.0.0.tar.gz"
-  sha256 "a9442d4d89c2586f232cdb6dd423c5ebe54436e31655a3dc52311419139614b2"
-  license ""
-
-  # depends_on "cmake" => :build
-
-  # Additional dependency
-  # resource "" do
-  #   url ""
-  #   sha256 ""
-  # end
+class Remoto < Formula
+  desc "Voice-controlled remote computer access system"
+  homepage "https://github.com/MarcoLipari/Remoto-Mac"
+  head "https://github.com/MarcoLipari/Remoto-Mac", branch: "main"
+  
+  depends_on "mediamtx"
+  depends_on "ffmpeg"
+  depends_on "cloudflare/cloudflare/cloudflared"
 
   def install
-    # Remove unrecognized options if they cause configure to fail
-    # https://docs.brew.sh/rubydoc/Formula.html#std_configure_args-instance_method
-    system "./configure", "--disable-silent-rules", *std_configure_args
-    # system "cmake", "-S", ".", "-B", "build", *std_cmake_args
+    # Install the scripts to libexec (hidden from user)
+    libexec.install "MacQuickInstall"
+    libexec.install "RemotoMacAliases"
+  end
+
+  def post_install
+    ohai "Setting up Remoto..."
+    
+    # Run MacQuickInstall to create ~/.remoto scripts and config
+    system "bash", "#{libexec}/MacQuickInstall"
+    
+    # Run RemotoMacAliases to add aliases to ~/.zshrc
+    system "bash", "#{libexec}/RemotoMacAliases"
+    
+    puts ""
+    puts "╔════════════════════════════════════════════════╗"
+    puts "║        ✅ Remoto Installed Successfully! 🎉   ║"
+    puts "╚════════════════════════════════════════════════╝"
+    puts ""
+    puts "⚠️  IMPORTANT: Restart your terminal or run:"
+    puts "   source ~/.zshrc"
+    puts ""
+    puts "Then use these commands:"
+    puts "   remoto-start       - Start streaming (URL auto-copies to clipboard)"
+    puts "   remoto-stop        - Stop all services"
+    puts "   remoto-status      - Check what's running"
+    puts "   remoto-logs        - View recent logs"
+    puts "   remoto-autostart   - Enable auto-start on login"
+    puts ""
+    puts "📺 The stream URL will automatically copy to your clipboard"
+    puts "   Paste it into your frontend config 'Livestream URL' field"
+    puts ""
+    puts "📁 Scripts installed to: ~/.remoto/"
+    puts "🖥️  Desktop shortcut created: Start Remoto.command"
+    puts ""
+  end
+
+  def caveats
+    <<~EOS
+      To use remoto commands, restart your terminal or run:
+        source ~/.zshrc
+
+      Then start streaming with:
+        remoto-start
+    EOS
   end
 
   test do
-    # `test do` will create, run in and delete a temporary directory.
-    #
-    # This test will fail and we won't accept that! For Homebrew/homebrew-core
-    # this will need to be a test that verifies the functionality of the
-    # software. Run the test with `brew test MarcoLipari-remoto`. Options passed
-    # to `brew install` such as `--HEAD` also need to be provided to `brew test`.
-    #
-    # The installed folder is not in the path, so use the entire path to any
-    # executables being tested: `system bin/"program", "do", "something"`.
-    system "false"
+    # Test that the setup created the expected files
+    assert_predicate testpath/".remoto/start.sh", :exist?
+    assert_predicate testpath/".remoto/stop.sh", :exist?
+    assert_predicate testpath/".remoto/status.sh", :exist?
   end
 end
