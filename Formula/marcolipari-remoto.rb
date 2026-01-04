@@ -1,6 +1,4 @@
-# Documentation: https://docs.brew.sh/Formula-Cookbook
-#                https://docs.brew.sh/rubydoc/Formula
-# PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
+
 class Remoto < Formula
   desc "Voice-controlled remote computer access system"
   homepage "https://github.com/MarcoLipari/Remoto-Mac"
