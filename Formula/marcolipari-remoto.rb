@@ -1,12 +1,10 @@
-
-class Remoto < Formula
+class MarcolipariRemoto < Formula
   desc "Voice-controlled remote computer access system"
   homepage "https://github.com/MarcoLipari/Remoto-Mac"
-  head "https://github.com/MarcoLipari/Remoto-Mac", branch: "main"
-  
-  depends_on "mediamtx"
-  depends_on "ffmpeg"
+  head "https://github.com/MarcoLipari/Remoto-Mac.git", branch: "main"
   depends_on "cloudflare/cloudflare/cloudflared"
+  depends_on "ffmpeg"
+  depends_on "mediamtx"
 
   def install
     # Install the scripts to libexec (hidden from user)
@@ -16,13 +14,10 @@ class Remoto < Formula
 
   def post_install
     ohai "Setting up Remoto..."
-    
     # Run MacQuickInstall to create ~/.remoto scripts and config
     system "bash", "#{libexec}/MacQuickInstall"
-    
     # Run RemotoMacAliases to add aliases to ~/.zshrc
     system "bash", "#{libexec}/RemotoMacAliases"
-    
     puts ""
     puts "╔════════════════════════════════════════════════╗"
     puts "║        ✅ Remoto Installed Successfully! 🎉   ║"
@@ -58,8 +53,8 @@ class Remoto < Formula
 
   test do
     # Test that the setup created the expected files
-    assert_predicate testpath/".remoto/start.sh", :exist?
-    assert_predicate testpath/".remoto/stop.sh", :exist?
-    assert_predicate testpath/".remoto/status.sh", :exist?
+    assert_path_exists testpath/".remoto/start.sh", :exist?
+    assert_path_exists testpath/".remoto/stop.sh", :exist?
+    assert_path_exists testpath/".remoto/status.sh", :exist?
   end
 end
