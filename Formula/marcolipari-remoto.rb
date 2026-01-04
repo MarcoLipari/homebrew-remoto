@@ -10,6 +10,7 @@ class MarcolipariRemoto < Formula
 
   def install
     libexec.install Dir["*"]
+    chmod 0755, "#{libexec}/RemotoMacInstaller/MacQuickInstall"
     bin.install_symlink "#{libexec}/RemotoMacInstaller/MacQuickInstall" => "remoto-install"
   end
 
