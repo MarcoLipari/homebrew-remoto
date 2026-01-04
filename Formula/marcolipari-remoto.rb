@@ -1,8 +1,8 @@
 class MarcolipariRemoto < Formula
   desc "Voice-controlled remote computer access system"
   homepage "https://github.com/MarcoLipari/Remoto-Mac"
-  url "https://github.com/marcolipari/remoto-mac/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "b2c3f199703497d7a8ad6bcc0007d3bc1d517eed5e8f30725ecbe0bcbb5945c6"
+  url "https://github.com/marcolipari/remoto-mac/archive/refs/tags/v0.1.1.tar.gz"
+  sha256 "f5f1cf8510733397779885a8f05de8f76966b9b955ffbbd259ecd50917c5bc1a"
 
   depends_on "cloudflare/cloudflare/cloudflared"
   depends_on "ffmpeg"
