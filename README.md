@@ -15,4 +15,7 @@ brew "marcolipari-remoto"
 
 ## Documentation
 
+See https://github.com/MarcoLipari/Remoto-Mac and https://github.com/muhammadbalawal/remoto
+
 `brew help`, `man brew` or check [Homebrew's documentation](https://docs.brew.sh).
+
