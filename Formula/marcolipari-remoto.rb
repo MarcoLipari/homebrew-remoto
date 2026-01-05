@@ -1,5 +1,5 @@
 class MarcolipariRemoto < Formula
-  desc "Voice-controlled remote computer access system"
+  desc "Remote computer access system"
   homepage "https://github.com/MarcoLipari/Remoto-Mac"
   url "https://github.com/marcolipari/remoto-mac/archive/refs/tags/v0.1.2.tar.gz"
   sha256 "e946192cc5411dd92bf8c9fd569aeaf6e464eb697c88f9f0f29538068eb7aca3"
